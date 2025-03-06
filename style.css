@@ -1,0 +1,23 @@
+.calculator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.display {
+    border: 2px solid black;
+    width: 300px;
+    margin: 20px;
+    font-size: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+}
+
+.num-btn {
+    font-size: 24px;
+    padding: 20px 40px;
+}
