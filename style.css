@@ -7,17 +7,23 @@
 .display {
     border: 2px solid black;
     width: 300px;
+    height: 30px;
     margin: 20px;
     font-size: 20px;
 }
 
 .buttons {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 300px;
 }
 
-.num-btn {
+.btn-row {
+    display: flex;
+    justify-content: center;
+}
+
+.num-btn, .eq-btn, .clear-btn, .op-btn {
     font-size: 24px;
     padding: 20px 40px;
 }
