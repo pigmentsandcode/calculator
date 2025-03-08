@@ -1,3 +1,7 @@
+h1 {
+    text-align: center;
+}
+
 .calculator {
     display: flex;
     flex-direction: column;
@@ -7,23 +11,28 @@
 .display {
     border: 2px solid black;
     width: 400px;
-    height: 30px;
+    height: 50px;
     margin: 20px;
-    font-size: 20px;
+    font-size: 36px;
+    box-sizing: border-box;
 }
 
 .buttons {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 400px;
+    gap: 5px;
 }
 
 .btn-row {
     display: flex;
     justify-content: center;
+    gap: 5px;
 }
 
 .num-btn, .eq-btn, .clear-btn, .op-btn {
     font-size: 24px;
-    padding: 20px 40px;
+    width: 100px;
+    height: 100px;
+    padding: 10px 10px;
 }
