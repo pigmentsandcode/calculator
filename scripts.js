@@ -14,6 +14,10 @@ function divide(num1, num2) {
   return num1 / num2;
 }
 
+function truncateResult(num) {
+  return Number.parseFloat(num.toFixed(5));
+}
+
 const firstNum = [];
 const secondNum = [];
 let operator = null;
@@ -21,13 +25,19 @@ let result = null;
 
 function operate(num1, num2, op) {
   if (op === "+") {
-    result = add(num1, num2);
+    result = truncateResult(add(num1, num2));
   } else if (op === "-") {
-    result = subtract(num1, num2);
+    result = truncateResult(subtract(num1, num2));
   } else if (op === "X") {
-    result = multiply(num1, num2);
+    result = truncateResult(multiply(num1, num2));
   } else if (op === "/") {
-    result = divide(num1, num2);
+    if (num2 === 0) {
+      result = null;
+      secondNum.length = 0;
+      alert("Cannot divide by zero! Enter second number again");
+    } else {
+      result = truncateResult(divide(num1, num2));
+    }
   } else {
     result = "ERROR";
   }
@@ -47,8 +57,23 @@ function updateDisplay() {
     displayEl.textContent = result;
   }
 }
+function clearDisplay() {
+  const displayEl = document.querySelector(".display");
+  displayEl.textContent = "";
+}
+
+function clearValues() {
+  firstNum.length = 0;
+  secondNum.length = 0;
+  result = null;
+  operator = null;
+}
 
 function handleDigitClick(e) {
+  if (result !== null) {
+    clearValues();
+  }
+
   if (operator === null) {
     firstNum.push(e.target.id);
   } else {
@@ -58,8 +83,25 @@ function handleDigitClick(e) {
 }
 
 function handleOperatorClick(e) {
+  if (firstNum.length === 0) {
+    return;
+  }
+
   if (secondNum.length === 0) {
     operator = e.target.textContent;
+  } else {
+    if (firstNum.length !== 0 && operator !== null) {
+      const num1 = +firstNum.join("");
+      const num2 = +secondNum.join("");
+      operate(num1, num2, operator);
+      let resultVals = result.toString().split("");
+      clearValues();
+      resultVals.forEach((val) => {
+        firstNum.push(val);
+      });
+      console.log("Double op click: " + firstNum);
+      operator = e.target.textContent;
+    }
   }
   updateDisplay();
 }
@@ -70,7 +112,17 @@ function handleEqClick() {
     const num2 = +secondNum.join("");
     operate(num1, num2, operator);
     updateDisplay();
+    let resultVals = result.toString().split("");
+    clearValues();
+    resultVals.forEach((val) => {
+      firstNum.push(val);
+    });
   }
+}
+
+function handleClearClick() {
+  clearValues();
+  clearDisplay();
 }
 
 const numberBtnEls = document.querySelectorAll(".num-btn");
@@ -85,3 +137,6 @@ opBtnsEl.forEach((btnEl) => {
 
 const eqBtnEl = document.querySelector("#eq");
 eqBtnEl.addEventListener("click", handleEqClick);
+
+const clrBtnEl = document.querySelector("#clear");
+clrBtnEl.addEventListener("click", handleClearClick);
