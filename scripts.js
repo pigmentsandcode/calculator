@@ -77,6 +77,11 @@ function clearValues() {
   operator = null;
 }
 
+function toggleDecimalBtn() {
+  const decimalBtn = document.querySelector("#decimal");
+  decimalBtn.disabled = !decimalBtn.disabled;
+}
+
 function handleDigitClick(e) {
   if (result !== null) {
     clearValues();
@@ -136,12 +141,33 @@ function handleClearClick() {
 function handleDelClick() {
   if (operator === null) {
     if (firstNum.length !== 0) {
-      firstNum.pop();
+      const popped = firstNum.pop();
+      if (popped === ".") {
+        toggleDecimalBtn();
+      }
     }
   } else if (secondNum.length === 0) {
     operator = null;
   } else if (result === null) {
-    secondNum.pop();
+    const popped = secondNum.pop();
+    if (popped === ".") {
+      toggleDecimalBtn();
+    }
+  }
+  updateDisplay();
+}
+
+function handleDecimalClick() {
+  if (result === null) {
+    if (operator === null) {
+      if (!firstNum.includes(".")) {
+        firstNum.push(".");
+        toggleDecimalBtn();
+      }
+    } else if (!secondNum.includes(".")) {
+      secondNum.push(".");
+      toggleDecimalBtn();
+    }
   }
   updateDisplay();
 }
@@ -165,3 +191,6 @@ clrBtnEl.addEventListener("click", handleClearClick);
 const delBtnEl = document.querySelector("#del");
 delBtnEl.addEventListener("click", handleDelClick);
 delBtnEl.disabled = true;
+
+const decimalBtnEl = document.querySelector("#decimal");
+decimalBtnEl.addEventListener("click", handleDecimalClick);
