@@ -26,13 +26,30 @@ h1 {
 
 .btn-row {
     display: flex;
-    justify-content: center;
-    gap: 5px;
+    justify-content: space-between;
+    gap: 2px;
 }
 
-.num-btn, .eq-btn, .clear-btn, .op-btn {
+.top-row {
+    justify-content: space-between;
+}
+
+.last-row {
+    justify-content: end;
+}
+
+/* .top-row > button, .last-row > button {
+    flex-grow: 0;
+} */
+
+.btn-row > button {
     font-size: 24px;
     width: 100px;
     height: 100px;
     padding: 10px 10px;
+}
+
+#clear {
+    margin-left: 0;
+    margin-right: auto;
 }

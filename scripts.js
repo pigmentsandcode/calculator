@@ -46,12 +46,20 @@ function operate(num1, num2, op) {
 function updateDisplay() {
   const displayEl = document.querySelector(".display");
   if (result === null) {
-    let firstNumStr = firstNum.join("");
-    let secondNumStr = secondNum.join("");
-    if (operator === null) {
-      displayEl.innerText = firstNumStr;
+    if (firstNum.length === 0) {
+      const delBtn = document.querySelector("#del");
+      delBtn.disabled = true;
+      displayEl.textContent = "";
     } else {
-      displayEl.textContent = `${firstNumStr} ${operator} ${secondNumStr}`;
+      let firstNumStr = firstNum.join("");
+      let secondNumStr = secondNum.join("");
+      if (operator === null) {
+        displayEl.innerText = firstNumStr;
+      } else {
+        displayEl.textContent = `${firstNumStr} ${operator} ${secondNumStr}`;
+      }
+      const delBtn = document.querySelector("#del");
+      delBtn.disabled = false;
     }
   } else {
     displayEl.textContent = result;
@@ -125,6 +133,19 @@ function handleClearClick() {
   clearDisplay();
 }
 
+function handleDelClick() {
+  if (operator === null) {
+    if (firstNum.length !== 0) {
+      firstNum.pop();
+    }
+  } else if (secondNum.length === 0) {
+    operator = null;
+  } else if (result === null) {
+    secondNum.pop();
+  }
+  updateDisplay();
+}
+
 const numberBtnEls = document.querySelectorAll(".num-btn");
 numberBtnEls.forEach((btnEl) => {
   btnEl.addEventListener("click", handleDigitClick);
@@ -140,3 +161,7 @@ eqBtnEl.addEventListener("click", handleEqClick);
 
 const clrBtnEl = document.querySelector("#clear");
 clrBtnEl.addEventListener("click", handleClearClick);
+
+const delBtnEl = document.querySelector("#del");
+delBtnEl.addEventListener("click", handleDelClick);
+delBtnEl.disabled = true;
